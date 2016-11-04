@@ -10,6 +10,10 @@ class Group < ApplicationRecord
     @tomorrows_standup ||= find_or_create_standup_for_day!(1)
   end
 
+  def question_set
+    QuestionSet.new
+  end
+
   private
 
   def find_or_create_standup_for_day!(days)
