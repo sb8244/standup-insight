@@ -1,5 +1,7 @@
 # Standup App
 
+## Models
+
 - User
   - Main entity of the system
   - Authentication happens off of it
@@ -20,3 +22,11 @@
 - Answer
   - Associated with a specific question
   - Tied to a standup for a given user
+
+## Features
+
+- Submit answers to the questions for a given group's standup (today or tomorrow only)
+- Append your answers to today or tomorrow standup
+- Email out to all users button
+- View all standups
+- Standup meeting randomizer
