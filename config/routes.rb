@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   resources :groups, only: [:index]
 
-  root to: "application#home"
+  root to: "groups#index"
 end
