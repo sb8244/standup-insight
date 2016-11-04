@@ -11,6 +11,8 @@ gem 'devise'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'faker'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -19,4 +21,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry-rails'
+end
+
+group :test do
+  gem 'rspec-rails'
 end
