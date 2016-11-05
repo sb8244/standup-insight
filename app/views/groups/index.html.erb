@@ -1,3 +1,22 @@
-<% @groups.each do |group| %>
-  <p><%= group.title %></p>
-<% end %>
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="text-center">Your Standup Groups</h2>
+  </div>
+</div>
+
+<div class="row mt15">
+  <div class="col-xs-12">
+    <ul class="list-group">
+      <% @groups.each do |group| %>
+        <a href="<%= group_path(group) %>">
+          <li class="list-group-item linked-item">
+            <%= group.title %>
+            <div class="pull-right">
+              <span class="label label-danger">Today's standup not submitted</span>
+            </div>
+          </li>
+        </a>
+      <% end %>
+    </ul>
+  </div>
+</div>
