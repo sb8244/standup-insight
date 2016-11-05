@@ -1,9 +1,9 @@
 class QuestionSet
   def questions
-    [
-      "What did you do yesterday?",
-      "What are you going to do today?",
-      "Do you have any blockers?"
-    ]
+    {
+      1 => "What did you do yesterday?",
+      2 => "What are you going to do today?",
+      3 => "Do you have any blockers?"
+    }
   end
 end
