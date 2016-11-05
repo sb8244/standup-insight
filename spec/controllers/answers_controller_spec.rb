@@ -12,7 +12,7 @@ RSpec.describe AnswersController, :type => :controller do
   describe "POST create" do
     it "requires all questions to be answered" do
       expect {
-        post :create, params: { answers: { 1 => "Test", 2 => "Test" }, stand_up_id: group.todays_standup.id }
+        post :create, params: { answers: { 1 => "Test", 2 => "Test", 3 => "" }, stand_up_id: group.todays_standup.id }
         expect(response).to redirect_to(group_path(group))
         expect(flash[:standup_form_error]).to eq("All questions must be answered.")
       }.not_to change { Answer.count }

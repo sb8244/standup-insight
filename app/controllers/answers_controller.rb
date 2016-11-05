@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
 
   def has_all_questions_answered?
     question_set.questions.all? do |question_id, question|
-      params.fetch(:answers).key?(question_id.to_s)
+      params.fetch(:answers)[question_id.to_s].present?
     end
   end
 
