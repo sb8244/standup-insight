@@ -26,4 +26,47 @@ RSpec.describe GroupsController, type: :controller do
       expect(response.body).not_to include(group2.title)
     end
   end
+
+  describe "GET show" do
+    it "shows 'Submit Standup' form for today's standup" do
+      get :show, params: { id: group.id }
+      expect(response.body).to include(answers_path(stand_up_id: group.todays_standup.id))
+      expect(response.body).not_to include(answers_path(stand_up_id: group.tomorrows_standup.id))
+    end
+
+    it "shows 'Submit Standup' form for tomorrow's standup" do
+      get :show, params: { id: group.id, when: "tomorrow" }
+      expect(response.body).to include(answers_path(stand_up_id: group.tomorrows_standup.id))
+      expect(response.body).not_to include(answers_path(stand_up_id: group.todays_standup.id))
+    end
+
+    context "with today and tomorrow's standup completed" do
+      let!(:today_answer) { group.todays_standup.answers.create!(user: user, question_id: 1, content: "Test answer", question_content: "A test question") }
+      let!(:tomorrows_answer) { group.tomorrows_standup.answers.create!(user: user, question_id: 1, content: "Another Answer", question_content: "B question") }
+
+      it "doesn't show today 'Submit Standup' form" do
+        get :show, params: { id: group.id }
+        expect(response.body).not_to include(answers_path(stand_up_id: group.todays_standup.id))
+        expect(response.body).not_to include(answers_path(stand_up_id: group.tomorrows_standup.id))
+      end
+
+      it "shows today's answers" do
+        get :show, params: { id: group.id }
+        expect(response.body).to include("Test answer")
+        expect(response.body).to include("A test question")
+      end
+
+      it "doesn't show tomorrow 'Submit Standup' form" do
+        get :show, params: { id: group.id, when: "tomorrow" }
+        expect(response.body).not_to include(answers_path(stand_up_id: group.todays_standup.id))
+        expect(response.body).not_to include(answers_path(stand_up_id: group.tomorrows_standup.id))
+      end
+
+      it "shows tomorrows's answers" do
+        get :show, params: { id: group.id, when: "tomorrow" }
+        expect(response.body).to include("Another Answer")
+        expect(response.body).to include("B question")
+      end
+    end
+  end
 end

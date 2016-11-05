@@ -1,0 +1,9 @@
+<%= form_tag(answers_path(stand_up_id: stand_up.id), method: :post, class: "form") do %>
+  <% @question_set.questions.each do |question_id, content| %>
+    <div class="form-group">
+      <%= label_tag("answers[#{question_id}]", content) %>
+      <%= text_area_tag("answers[#{question_id}]", nil, class: "form-control", rows: 5, required: true) %>
+    </div>
+  <% end %>
+  <%= submit_tag("Submit Standup", class: "btn btn-success") %>
+<% end %>

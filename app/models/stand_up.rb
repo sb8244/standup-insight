@@ -3,7 +3,18 @@ class StandUp < ApplicationRecord
 
   has_many :answers
 
-  def completed?(user)
-    answers.where(user: user).exists?
+  def for_user(user)
+    @user = user
+    self
+  end
+
+  def completed?
+    raise ArgumentError.new("User must be set") unless @user.present?
+    users_answers.exists?
+  end
+
+  def users_answers
+    raise ArgumentError.new("User must be set") unless @user.present?
+    answers.where(user: @user)
   end
 end

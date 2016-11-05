@@ -11,7 +11,27 @@
         <div class="panel-title">Submit Standup</div>
       </div>
       <div class="panel-body">
+        <ul class="nav nav-tabs nav-justified mb15">
+          <li class="<%= @stand_up_type == "today" ? "active" : "" %>">
+            <a href="<%= url_for(when: "today") %>">Today's Standup</a>
+          </li>
 
+          <li class="<%= @stand_up_type == "tomorrow" ? "active" : "" %>">
+            <a href="<%= url_for(when: "tomorrow") %>">Tomorrow's Standup</a>
+          </li>
+        </ul>
+
+        <% if flash[:standup_form_error] %>
+          <div class="alert alert-danger">
+            <%= flash[:standup_form_error] %>
+          </div>
+        <% end %>
+
+        <% if @stand_up.completed? %>
+          <%= render partial: "stand_up_answers", locals: { stand_up: @stand_up } %>
+        <% else %>
+          <%= render partial: "stand_up_form", locals: { stand_up: @stand_up } %>
+        <% end %>
       </div>
     </div>
   </div>
