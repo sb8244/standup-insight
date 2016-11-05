@@ -36,7 +36,7 @@ RSpec.describe GroupsController, type: :controller do
 
     it "shows 'Submit Standup' form for tomorrow's standup" do
       get :show, params: { id: group.id, when: "tomorrow" }
-      expect(response.body).to include(answers_path(stand_up_id: group.tomorrows_standup.id))
+      expect(response.body).to include(answers_path(stand_up_id: group.tomorrows_standup.id, query_params: { when: "tomorrow" }))
       expect(response.body).not_to include(answers_path(stand_up_id: group.todays_standup.id))
     end
 

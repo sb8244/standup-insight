@@ -36,5 +36,10 @@ RSpec.describe AnswersController, :type => :controller do
 
       expect(Answer.pluck(:user_id, :stand_up_id).uniq).to eq([[user.id, group.todays_standup.id]])
     end
+
+    it "maintains query params" do
+      post :create, params: { answers: { 1 => "Test 1", 2 => "Test 2", 3 => "Test 3" }, stand_up_id: group.todays_standup.id, query_params: { when: "tomorrow" } }
+      expect(response).to redirect_to(group_path(group, when: "tomorrow"))
+    end
   end
 end

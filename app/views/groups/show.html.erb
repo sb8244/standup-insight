@@ -13,11 +13,11 @@
       <div class="panel-body">
         <ul class="nav nav-tabs nav-justified mb15">
           <li class="<%= @stand_up_type == "today" ? "active" : "" %>">
-            <a href="<%= url_for(when: "today") %>">Today's Standup</a>
+            <a href="<%= url_for(request.query_parameters.merge(when: "today")) %>">Today's Standup</a>
           </li>
 
           <li class="<%= @stand_up_type == "tomorrow" ? "active" : "" %>">
-            <a href="<%= url_for(when: "tomorrow") %>">Tomorrow's Standup</a>
+            <a href="<%= url_for(request.query_parameters.merge(when: "tomorrow")) %>">Tomorrow's Standup</a>
           </li>
         </ul>
 

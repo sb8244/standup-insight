@@ -3,19 +3,23 @@ class AnswersController < ApplicationController
     return not_full_answers_error unless has_all_questions_answered?
     return already_answered_error if stand_up_already_answered?
     create_answers!
-    redirect_to group_path(group)
+    redirect_to group_path(group, query_params)
   end
 
   private
 
+  def query_params
+    params.permit(query_params: [:when]).fetch(:query_params, {}).to_h
+  end
+
   def not_full_answers_error
     flash[:standup_form_error] = "All questions must be answered."
-    redirect_to group_path(group)
+    redirect_to group_path(group, query_params)
   end
 
   def already_answered_error
     flash[:standup_form_error] = "This standup has already been submitted."
-    redirect_to group_path(group)
+    redirect_to group_path(group, query_params)
   end
 
   def has_all_questions_answered?
