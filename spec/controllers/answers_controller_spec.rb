@@ -11,9 +11,20 @@ RSpec.describe AnswersController, :type => :controller do
 
   describe "POST create" do
     it "requires all questions to be answered" do
-      post :create, params: { answers: { 1 => "Test", 2 => "Test" }, stand_up_id: group.todays_standup.id }
-      expect(response).to redirect_to(group_path(group))
-      expect(flash[:standup_form_error]).to eq("All questions must be answered")
+      expect {
+        post :create, params: { answers: { 1 => "Test", 2 => "Test" }, stand_up_id: group.todays_standup.id }
+        expect(response).to redirect_to(group_path(group))
+        expect(flash[:standup_form_error]).to eq("All questions must be answered.")
+      }.not_to change { Answer.count }
+    end
+
+    it "doesn't let a user double submit" do
+      user.answers.create!(stand_up: group.todays_standup, question_id: 1, content: "Test")
+      expect {
+        post :create, params: { answers: { 1 => "Test 1", 2 => "Test 2", 3 => "Test 3" }, stand_up_id: group.todays_standup.id }
+        expect(response).to redirect_to(group_path(group))
+        expect(flash[:standup_form_error]).to eq("This standup has already been submitted.")
+      }.not_to change { Answer.count }
     end
 
     it "creates an Answer for each answer" do

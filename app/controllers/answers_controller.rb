@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   def create
     return not_full_answers_error unless has_all_questions_answered?
+    return already_answered_error if stand_up_already_answered?
     create_answers!
     redirect_to group_path(group)
   end
@@ -8,7 +9,12 @@ class AnswersController < ApplicationController
   private
 
   def not_full_answers_error
-    flash[:standup_form_error] = "All questions must be answered"
+    flash[:standup_form_error] = "All questions must be answered."
+    redirect_to group_path(group)
+  end
+
+  def already_answered_error
+    flash[:standup_form_error] = "This standup has already been submitted."
     redirect_to group_path(group)
   end
 
@@ -16,6 +22,10 @@ class AnswersController < ApplicationController
     question_set.questions.all? do |question_id, question|
       params.fetch(:answers).key?(question_id.to_s)
     end
+  end
+
+  def stand_up_already_answered?
+    current_user.answers.where(stand_up_id: stand_up.id).exists?
   end
 
   def create_answers!
