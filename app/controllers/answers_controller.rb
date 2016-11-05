@@ -31,14 +31,20 @@ class AnswersController < ApplicationController
   def create_answers!
     Answer.transaction do
       params.fetch(:answers).each do |question_id, content|
-        current_user.answers.create!(stand_up_id: stand_up.id, question_id: question_id, content: content)
+        question_content = question_set.question(question_id)
+        current_user.answers.create!(
+          stand_up_id: stand_up.id,
+          question_id: question_id,
+          question_content: question_content,
+          content: content
+        )
       end
       flash[:standup_form_success] = "Thanks for your standup!"
     end
   end
 
   def stand_up
-    @stand_up ||= current_user.stand_ups.find(params.fetch(:stand_up_id))
+    @stand_up ||= current_user.stand_ups.find(params.fetch(:stand_up_id)).for_user(current_user)
   end
 
   def group

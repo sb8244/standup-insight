@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105202207) do
+ActiveRecord::Schema.define(version: 20161105212205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
-    t.integer  "stand_up_id", null: false
-    t.integer  "user_id",     null: false
-    t.integer  "question_id", null: false
-    t.text     "content",     null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "stand_up_id",      null: false
+    t.integer  "user_id",          null: false
+    t.integer  "question_id",      null: false
+    t.text     "content",          null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.text     "question_content", null: false
     t.index ["stand_up_id"], name: "index_answers_on_stand_up_id", using: :btree
     t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
   end

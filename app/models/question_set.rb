@@ -6,4 +6,8 @@ class QuestionSet
       3 => "Do you have any blockers?"
     }
   end
+
+  def question(id)
+    questions[Integer(id)]
+  end
 end

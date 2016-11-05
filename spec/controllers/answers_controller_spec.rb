@@ -19,7 +19,7 @@ RSpec.describe AnswersController, :type => :controller do
     end
 
     it "doesn't let a user double submit" do
-      user.answers.create!(stand_up: group.todays_standup, question_id: 1, content: "Test")
+      user.answers.create!(stand_up: group.todays_standup, question_id: 1, content: "Test", question_content: "Who are you?")
       expect {
         post :create, params: { answers: { 1 => "Test 1", 2 => "Test 2", 3 => "Test 3" }, stand_up_id: group.todays_standup.id }
         expect(response).to redirect_to(group_path(group))
