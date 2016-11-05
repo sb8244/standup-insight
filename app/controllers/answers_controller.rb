@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
   end
 
   def stand_up_already_answered?
-    current_user.answers.where(stand_up_id: stand_up.id).exists?
+    stand_up.completed?(current_user)
   end
 
   def create_answers!
