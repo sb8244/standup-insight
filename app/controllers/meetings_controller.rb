@@ -5,7 +5,7 @@ class MeetingsController < ApplicationController
   end
 
   def destroy
-    StandupMailer.report(standup).deliver_now
+    StandupMailer.report(standup, from: current_user.email).deliver_now
     redirect_to group_path(params[:id])
   end
 

@@ -1,11 +1,10 @@
 class StandupMailer < ApplicationMailer
-  def report(standup)
+  def report(standup, from:)
     emails = standup.group.users.pluck(:email)
-    primary = emails.first
 
     @view = ViewObject.new(standup)
 
-    mail(from: primary, cc: emails, subject: "Standup Summary - #{standup.date_of_standup}")
+    mail(from: from, cc: emails, subject: "Standup Summary - #{standup.date_of_standup}")
   end
 
   class ViewObject
