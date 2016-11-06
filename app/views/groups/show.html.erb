@@ -31,6 +31,10 @@
           </div>
         <% end %>
 
+        <p class="alert alert-info">
+          <%= @submitted_count %> / <%= @group_user_count %> people in your group have submitted their standup
+        </p>
+
         <% if @stand_up.completed? %>
           <%= render partial: "stand_up_answers", locals: { stand_up: @stand_up } %>
         <% else %>

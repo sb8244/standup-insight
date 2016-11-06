@@ -9,6 +9,8 @@ class GroupsController < ApplicationController
     @stand_up = stand_up
     @stand_up_type = stand_up_type
     @today = Time.now.in_time_zone("US/Eastern").to_date
+    @submitted_count = stand_up.answers.count("DISTINCT user_id")
+    @group_user_count = @group.users.count
   end
 
   private

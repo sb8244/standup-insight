@@ -2,11 +2,15 @@ require 'rails_helper'
 
 RSpec.describe GroupsController, type: :controller do
   let!(:user) { FactoryGirl.create(:user) }
+  let!(:group_mate) { FactoryGirl.create(:user) }
+  let!(:other_user) { FactoryGirl.create(:user) }
   let!(:group) { FactoryGirl.create(:group) }
   let!(:group2) { FactoryGirl.create(:group) }
 
   before do
     user.groups << group
+    group_mate.groups << group
+    other_user.groups << group2
     sign_in(user)
   end
 
@@ -36,8 +40,13 @@ RSpec.describe GroupsController, type: :controller do
 
     it "shows 'Submit Standup' form for tomorrow's standup" do
       get :show, params: { id: group.id, when: "tomorrow" }
-      expect(response.body).to include(answers_path(stand_up_id: group.tomorrows_standup.id, query_params: { when: "tomorrow" }))
+      expect(response.body).to include(CGI.escapeHTML(answers_path(stand_up_id: group.tomorrows_standup.id, query_params: { when: "tomorrow" })))
       expect(response.body).not_to include(answers_path(stand_up_id: group.todays_standup.id))
+    end
+
+    it "says how many users still need to submit it" do
+      get :show, params: { id: group.id }
+      expect(response.body).to include("0 / 2 people in your group have submitted their standup")
     end
 
     context "with today and tomorrow's standup completed" do
