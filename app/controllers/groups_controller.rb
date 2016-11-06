@@ -4,27 +4,50 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = current_user.groups.find(params[:id])
-    @question_set = @group.question_set
-    @stand_up = stand_up
-    @stand_up_type = stand_up_type
-    @today = Time.now.in_time_zone("US/Eastern").to_date
-    @submitted_count = stand_up.answers.count("DISTINCT user_id")
-    @group_user_count = @group.users.count
+    @view = DashboardViewObject.new(current_user, params: params)
   end
 
   private
 
-  def stand_up_type
-    params.fetch(:when, "today")
-  end
+  class DashboardViewObject
+    attr_reader :user, :params
 
-  def stand_up
-    method = {
-      "today" => :todays_standup,
-      "tomorrow" => :tomorrows_standup
-    }[stand_up_type] || :todays_standup
+    def initialize(user, params:)
+      @user = user
+      @params = params
+    end
 
-    @group.send(method).for_user(current_user)
+    def today
+      @today ||= Time.now.in_time_zone("US/Eastern").to_date
+    end
+
+    def group
+      @group ||= user.groups.find(params[:id])
+    end
+
+    def question_set
+      group.question_set
+    end
+
+    def stand_up_type
+      params.fetch(:when, "today")
+    end
+
+    def stand_up
+      method = {
+        "today" => :todays_standup,
+        "tomorrow" => :tomorrows_standup
+      }[stand_up_type] || :todays_standup
+
+      @group.send(method).for_user(user)
+    end
+
+    def submitted_count
+      @submitted_count ||= stand_up.answers.count("DISTINCT user_id")
+    end
+
+    def group_user_count
+      @group_user_count ||= @group.users.count
+    end
   end
 end

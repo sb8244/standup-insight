@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-12">
-    <h2 class="text-center"><%= @group.title %></h2>
+    <h2 class="text-center"><%= @view.group.title %></h2>
   </div>
 </div>
 
@@ -12,15 +12,15 @@
       </div>
       <div class="panel-body">
         <ul class="nav nav-tabs nav-justified mb15">
-          <li class="<%= @stand_up_type == "today" ? "active" : "" %>">
+          <li class="<%= @view.stand_up_type == "today" ? "active" : "" %>">
             <a href="<%= url_for(request.query_parameters.merge(when: "today")) %>">
-              <%= @today.strftime('%A') %>'s Standup
+              <%= @view.today.strftime('%A') %>'s Standup
             </a>
           </li>
 
-          <li class="<%= @stand_up_type == "tomorrow" ? "active" : "" %>">
+          <li class="<%= @view.stand_up_type == "tomorrow" ? "active" : "" %>">
             <a href="<%= url_for(request.query_parameters.merge(when: "tomorrow")) %>">
-              <%= (@today + 1).strftime('%A') %>'s Standup
+              <%= (@view.today + 1).strftime('%A') %>'s Standup
             </a>
           </li>
         </ul>
@@ -32,13 +32,13 @@
         <% end %>
 
         <p class="alert alert-info">
-          <%= @submitted_count %> / <%= @group_user_count %> people in your group have submitted their standup
+          <%= @view.submitted_count %> / <%= @view.group_user_count %> people in your group have submitted their standup
         </p>
 
-        <% if @stand_up.completed? %>
-          <%= render partial: "stand_up_answers", locals: { stand_up: @stand_up } %>
+        <% if @view.stand_up.completed? %>
+          <%= render partial: "stand_up_answers", locals: { stand_up: @view.stand_up } %>
         <% else %>
-          <%= render partial: "stand_up_form", locals: { stand_up: @stand_up } %>
+          <%= render partial: "stand_up_form", locals: { stand_up: @view.stand_up, question_set: @view.question_set } %>
         <% end %>
       </div>
     </div>

@@ -11,7 +11,7 @@ class Group < ApplicationRecord
   end
 
   def question_set
-    QuestionSet.new
+    @question_set ||= QuestionSet.new
   end
 
   private

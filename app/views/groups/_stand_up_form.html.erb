@@ -1,5 +1,5 @@
 <%= form_tag(answers_path(stand_up_id: stand_up.id, query_params: request.query_parameters), method: :post, class: "form") do %>
-  <% @question_set.questions.each do |question_id, content| %>
+  <% question_set.questions.each do |question_id, content| %>
     <div class="form-group">
       <%= label_tag("answers[#{question_id}]", content) %>
       <%= text_area_tag("answers[#{question_id}]", nil, class: "form-control", rows: 3, required: true) %>
