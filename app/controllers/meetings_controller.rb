@@ -4,6 +4,10 @@ class MeetingsController < ApplicationController
     return redirect_to url_for(order: @view.meeting_order.join(","), cur: @view.current_order) if !params[:cur]
   end
 
+  def destroy
+    redirect_to group_path(params[:id])
+  end
+
   private
 
   class ShowViewObject

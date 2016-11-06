@@ -1,16 +1,19 @@
 <div class="row mt15">
   <div class="col-sm-8 col-sm-offset-2">
-    <h3 class="mb30">
-      It's <%= @view.whos_up.display_name %>'s turn!
+    <div class="clearfix mb30">
+      <h3 class="pull-left no-margin">
+        It's <%= @view.whos_up.display_name %>'s turn!
+      </h3>
 
       <div class="pull-right">
+        <small><%= link_to "cancel", group_path(@view.group) %></small>
         <% if @view.next_order == :done %>
-          <%= link_to "Finish", "#", class: "btn btn-success btn-xs" %>
+          <%= link_to "Finish", finish_meeting_path(@view.group), class: "btn btn-success btn-xs" %>
         <% else %>
           <%= link_to "Next", url_for(order: @view.meeting_order.join(","), cur: @view.next_order), class: "btn btn-primary btn-xs" %>
         <% end %>
       </div>
-    </h3>
+    </div>
 
     <hr/>
 
