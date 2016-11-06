@@ -47,6 +47,10 @@ RSpec.describe GroupsController, type: :controller do
     it "says how many users still need to submit it" do
       get :show, params: { id: group.id }
       expect(response.body).to include("0 / 2 people in your group have submitted their standup")
+
+      group.todays_standup.answers.create!(user: user, question_id: 1, content: "Test answer", question_content: "A test question")
+      get :show, params: { id: group.id }
+      expect(response.body).to include("1 / 2 people in your group have submitted their standup")
     end
 
     context "with today and tomorrow's standup completed" do
