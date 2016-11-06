@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
     @question_set = @group.question_set
     @stand_up = stand_up
     @stand_up_type = stand_up_type
+    @today = Time.now.in_time_zone("US/Eastern").to_date
   end
 
   private
