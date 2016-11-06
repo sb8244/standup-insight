@@ -17,6 +17,6 @@ class Group < ApplicationRecord
   private
 
   def find_or_create_standup_for_day!(days)
-    stand_ups.where(date_of_standup: Date.current + days).first_or_create!
+    stand_ups.where(date_of_standup: Time.now.in_time_zone("US/Eastern").to_date + days).first_or_create!
   end
 end
