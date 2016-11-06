@@ -8,6 +8,10 @@ class StandUp < ApplicationRecord
     self
   end
 
+  def users_answered
+    answers.count("DISTINCT user_id")
+  end
+
   def completed?
     raise ArgumentError.new("User must be set") unless @user.present?
     users_answers.exists?

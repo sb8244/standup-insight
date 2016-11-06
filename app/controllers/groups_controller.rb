@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   def index
-    @groups = current_user.groups.order(id: :desc)
+    @view = IndexViewObject.new(current_user)
   end
 
   def show
@@ -8,6 +8,27 @@ class GroupsController < ApplicationController
   end
 
   private
+
+  class IndexViewObject
+    attr_reader :user
+
+    def initialize(user)
+      @user = user
+    end
+
+    def groups
+      @groups ||= user.groups.order(id: :desc)
+    end
+
+    def today_submitted(group)
+      group.todays_standup.for_user(user).completed?
+    end
+
+    def completion_percentage(group)
+      stand_up = group.todays_standup
+      (stand_up.users_answered.fdiv(group.users.count) * 100.0).to_i
+    end
+  end
 
   class DashboardViewObject
     attr_reader :user, :params
@@ -43,7 +64,7 @@ class GroupsController < ApplicationController
     end
 
     def submitted_count
-      @submitted_count ||= stand_up.answers.count("DISTINCT user_id")
+      @submitted_count ||= stand_up.users_answered
     end
 
     def group_user_count

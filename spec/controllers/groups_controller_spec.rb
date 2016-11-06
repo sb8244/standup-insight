@@ -29,6 +29,30 @@ RSpec.describe GroupsController, type: :controller do
       expect(response.body).to include(group.title)
       expect(response.body).not_to include(group2.title)
     end
+
+    it "says today's standup isn't submitted" do
+      get :index
+      expect(response.body).to include("Today's standup not submitted")
+    end
+
+    it "is at 0%" do
+      get :index
+      expect(response.body).to include("0%")
+    end
+
+    context "with today's standup submitted" do
+      let!(:today_answer) { group.todays_standup.answers.create!(user: user, question_id: 1, content: "Test answer", question_content: "A test question") }
+
+      it "says today's standup is submitted" do
+        get :index
+        expect(response.body).to include("Today submitted")
+      end
+
+      it "is at 50%" do
+        get :index
+        expect(response.body).to include("50%")
+      end
+    end
   end
 
   describe "GET show" do
