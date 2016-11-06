@@ -1,11 +1,14 @@
 <div class="row">
   <div class="col-sm-12">
-    <h2 class="text-center"><%= @submit_standup_view.group.title %></h2>
+    <h2 class="text-center">
+      <%= link_to "«", groups_path %>
+      <%= @submit_standup_view.group.title %>
+    </h2>
   </div>
 </div>
 
 <div class="row mt15">
-  <div class="col-sm-6">
+  <div class="col-sm-8 col-sm-offset-2">
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="panel-title">Submit Standup</div>
@@ -40,17 +43,6 @@
         <% else %>
           <%= render partial: "stand_up_form", locals: { stand_up: @submit_standup_view.stand_up, question_set: @submit_standup_view.question_set } %>
         <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="panel-title">View Standups</div>
-      </div>
-      <div class="panel-body">
-
       </div>
     </div>
   </div>
