@@ -5,10 +5,15 @@ class MeetingsController < ApplicationController
   end
 
   def destroy
+    StandupMailer.report(standup).deliver_now
     redirect_to group_path(params[:id])
   end
 
   private
+
+  def standup
+    current_user.groups.find(params[:id]).todays_standup
+  end
 
   class ShowViewObject
     attr_reader :user, :group, :params
