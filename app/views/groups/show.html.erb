@@ -34,9 +34,19 @@
           </div>
         <% end %>
 
-        <p class="alert alert-info">
-          <%= @submit_standup_view.submitted_count %> / <%= @submit_standup_view.group_user_count %> people in your group have submitted their standup
-        </p>
+        <div class="alert alert-info">
+          <p>
+            <%= @submit_standup_view.submitted_count %> / <%= @submit_standup_view.group_user_count %> people in your group have submitted their standup.
+            <% if @submit_standup_view.waiting_on.any? %>Waiting on:<% end %>
+          </p>
+          <% if @submit_standup_view.waiting_on.any? %>
+            <ul>
+              <% @submit_standup_view.waiting_on.each do |waiting_on_user| %>
+                <li><%= waiting_on_user.display_name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
 
         <% if @submit_standup_view.stand_up.completed? %>
           <%= render partial: "stand_up_answers", locals: { stand_up: @submit_standup_view.stand_up } %>

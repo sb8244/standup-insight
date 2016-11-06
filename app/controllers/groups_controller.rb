@@ -26,7 +26,7 @@ class GroupsController < ApplicationController
 
     def completion_percentage(group)
       stand_up = group.todays_standup
-      (stand_up.users_answered.fdiv(group.users.count) * 100.0).to_i
+      (stand_up.users_answered_count.fdiv(group.users.count) * 100.0).to_i
     end
   end
 
@@ -64,11 +64,15 @@ class GroupsController < ApplicationController
     end
 
     def submitted_count
-      @submitted_count ||= stand_up.users_answered
+      @submitted_count ||= stand_up.users_answered_count
     end
 
     def group_user_count
-      @group_user_count ||= @group.users.count
+      @group_user_count ||= group.users.count
+    end
+
+    def waiting_on
+      (group.users - stand_up.users_answered).sort_by(&:display_name)
     end
   end
 end
