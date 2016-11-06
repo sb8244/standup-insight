@@ -1,0 +1,23 @@
+<div class="row mt15">
+  <div class="col-sm-8 col-sm-offset-2">
+    <h3 class="mb30">
+      It's <%= @view.whos_up.display_name %>'s turn!
+
+      <div class="pull-right">
+        <% if @view.next_order == :done %>
+          <%= link_to "Finish", "#", class: "btn btn-success btn-xs" %>
+        <% else %>
+          <%= link_to "Next", url_for(order: @view.meeting_order.join(","), cur: @view.next_order), class: "btn btn-primary btn-xs" %>
+        <% end %>
+      </div>
+    </h3>
+
+    <hr/>
+
+    <% if @view.whos_up_submitted? %>
+      <%= render partial: "groups/stand_up_answers", locals: { stand_up: @view.stand_up } %>
+    <% else %>
+      <p>No answers submitted for this standup.</p>
+    <% end %>
+  </div>
+</div>
