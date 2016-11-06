@@ -1,0 +1,12 @@
+<% @view.users.each do |user| %>
+  <div>
+    <h3><%= user.display_name %></h3>
+    <% @view.answers_by_user[user].each do |answer| %>
+      <div>
+        <p><strong><%= answer.question_content %></strong></p>
+        <p><%= answer.content %></p>
+      </div>
+    <% end %>
+  </div>
+
+<% end %>
