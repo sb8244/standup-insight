@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-12">
-    <h2 class="text-center"><%= @view.group.title %></h2>
+    <h2 class="text-center"><%= @submit_standup_view.group.title %></h2>
   </div>
 </div>
 
@@ -12,15 +12,15 @@
       </div>
       <div class="panel-body">
         <ul class="nav nav-tabs nav-justified mb15">
-          <li class="<%= @view.stand_up_type == "today" ? "active" : "" %>">
+          <li class="<%= @submit_standup_view.stand_up_type == "today" ? "active" : "" %>">
             <a href="<%= url_for(request.query_parameters.merge(when: "today")) %>">
-              <%= @view.today.strftime('%A') %>'s Standup
+              <%= @submit_standup_view.today.strftime('%A') %>'s Standup
             </a>
           </li>
 
-          <li class="<%= @view.stand_up_type == "tomorrow" ? "active" : "" %>">
+          <li class="<%= @submit_standup_view.stand_up_type == "tomorrow" ? "active" : "" %>">
             <a href="<%= url_for(request.query_parameters.merge(when: "tomorrow")) %>">
-              <%= (@view.today + 1).strftime('%A') %>'s Standup
+              <%= (@submit_standup_view.today + 1).strftime('%A') %>'s Standup
             </a>
           </li>
         </ul>
@@ -32,13 +32,13 @@
         <% end %>
 
         <p class="alert alert-info">
-          <%= @view.submitted_count %> / <%= @view.group_user_count %> people in your group have submitted their standup
+          <%= @submit_standup_view.submitted_count %> / <%= @submit_standup_view.group_user_count %> people in your group have submitted their standup
         </p>
 
-        <% if @view.stand_up.completed? %>
-          <%= render partial: "stand_up_answers", locals: { stand_up: @view.stand_up } %>
+        <% if @submit_standup_view.stand_up.completed? %>
+          <%= render partial: "stand_up_answers", locals: { stand_up: @submit_standup_view.stand_up } %>
         <% else %>
-          <%= render partial: "stand_up_form", locals: { stand_up: @view.stand_up, question_set: @view.question_set } %>
+          <%= render partial: "stand_up_form", locals: { stand_up: @submit_standup_view.stand_up, question_set: @submit_standup_view.question_set } %>
         <% end %>
       </div>
     </div>

@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @view = DashboardViewObject.new(current_user, params: params)
+    @submit_standup_view = DashboardViewObject.new(current_user, params: params)
   end
 
   private
