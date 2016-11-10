@@ -32,6 +32,10 @@ class MeetingsController < ApplicationController
       @stand_up ||= group.todays_standup.for_user(whos_up)
     end
 
+    def started_at
+      params[:start]
+    end
+
     def meeting_order
       @meeting_order ||= params.fetch(:order) do
         group.users.pluck(:id).shuffle.join(",")

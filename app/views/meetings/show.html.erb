@@ -8,9 +8,9 @@
       <div class="pull-right">
         <small><%= link_to "cancel", group_path(@view.group) %></small>
         <% if @view.next_order == :done %>
-          <%= link_to "Finish", finish_meeting_path(@view.group), class: "btn btn-success btn-xs" %>
+          <%= link_to "Finish", finish_meeting_path(@view.group, start: @view.started_at), class: "btn btn-success btn-xs" %>
         <% else %>
-          <%= link_to "Next", url_for(order: @view.meeting_order.join(","), cur: @view.next_order), class: "btn btn-primary btn-xs" %>
+          <%= link_to "Next", url_for(order: @view.meeting_order.join(","), cur: @view.next_order, start: @view.started_at), class: "btn btn-primary btn-xs" %>
         <% end %>
       </div>
     </div>
