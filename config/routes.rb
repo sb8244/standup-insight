@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :meetings, only: [:show] do
     member do
       get "destroy", as: :finish
+      get "prep", as: :prep
     end
   end
 

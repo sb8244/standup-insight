@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2 class="text-center">
+      <%= link_to "«", group_path(@view.group) %>
+      <%= @view.group.title %>
+    </h2>
+  </div>
+</div>
+
+<div class="row mt30">
+  <div class="col-sm-12 text-center">
+    <iframe width="560"
+            height="315"
+            src="https://www.youtube.com/embed/pZG7IK99OvI"
+            frameborder="0"
+            allowfullscreen></iframe>
+  </div>
+
+  <div class="col-sm-12 text-center mt15">
+    <%= link_to "Start!",
+          meeting_path(@view.group.id, order: @view.meeting_order.join(","), cur: @view.current_order),
+          class: "btn btn-primary btn-lg" %>
+  </div>
+</div>

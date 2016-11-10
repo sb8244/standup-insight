@@ -4,6 +4,10 @@ class MeetingsController < ApplicationController
     return redirect_to url_for(order: @view.meeting_order.join(","), cur: @view.current_order) if !params[:cur]
   end
 
+  def prep
+    @view = ShowViewObject.new(current_user, params[:id], params: params)
+  end
+
   def destroy
     StandupMailer.report(standup, from: current_user.email).deliver_now
     redirect_to group_path(params[:id])
