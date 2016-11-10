@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2 class="text-center">
+      <%= link_to "«", group_path(@view.group) %>
+      <%= @view.group.title %>
+    </h2>
+  </div>
+</div>
+
+<div class="row mt30">
+  <div class="col-sm-12 text-center">
+    <h2>Nice! Your standup took <%= @view.formatted_duration %></h2>
+    <h4>That is <%= @view.formatted_average_duration %> seconds per teammate</h4>
+    <%= link_to "All Done", group_path(@view.group) %>
+  </div>
+</div>

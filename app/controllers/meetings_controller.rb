@@ -8,15 +8,45 @@ class MeetingsController < ApplicationController
     @view = ShowViewObject.new(current_user, params[:id], params: params)
   end
 
+  def finish_landing
+    @view = FinishLandingViewObject.new(current_user, params[:id], params: params)
+  end
+
   def destroy
     StandupMailer.report(standup, from: current_user.email).deliver_now
-    redirect_to group_path(params[:id])
+    redirect_to finish_landing_meeting_path(params[:id], start: params[:start], end: Time.now.to_i)
   end
 
   private
 
   def standup
     current_user.groups.find(params[:id]).todays_standup
+  end
+
+  class FinishLandingViewObject
+    attr_reader :user, :group, :params
+
+    def initialize(user, id, params:)
+      @user = user
+      @group = user.groups.find(id)
+      @params = params
+    end
+
+    def duration
+      params[:end].to_i - params[:start].to_i
+    end
+
+    def average_duration
+      duration / group.users.count
+    end
+
+    def formatted_duration
+      Time.at(duration).utc.strftime("%-Mm %Ss")
+    end
+
+    def formatted_average_duration
+      Time.at(average_duration).utc.strftime("%-Mm %Ss")
+    end
   end
 
   class ShowViewObject
