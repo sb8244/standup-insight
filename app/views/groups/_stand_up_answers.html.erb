@@ -1,6 +1,6 @@
 <% stand_up.users_answers.each do |answer| %>
   <div class="answer">
     <label><%= answer.question_content %></label>
-    <p><%= answer.content %></p>
+    <pre><%= answer.content %></pre>
   </div>
 <% end %>

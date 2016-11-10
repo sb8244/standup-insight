@@ -4,7 +4,7 @@
     <% @view.answers_by_user[user].each do |answer| %>
       <div>
         <p><strong><%= answer.question_content %></strong></p>
-        <p><%= answer.content %></p>
+        <pre><%= answer.content %></pre>
       </div>
     <% end %>
   </div>
