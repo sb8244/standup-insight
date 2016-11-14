@@ -24,6 +24,6 @@ class StandUp < ApplicationRecord
 
   def users_answers
     raise ArgumentError.new("User must be set") unless @user.present?
-    answers.where(user: @user)
+    answers.where(user: @user).order(question_id: :asc)
   end
 end
