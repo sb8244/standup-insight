@@ -1,6 +1,6 @@
 class StandupMailer < ApplicationMailer
   def report(standup, from:)
-    emails = standup.group.users.pluck(:email)
+    emails = standup.group.users.gets_email.pluck(:email)
 
     @view = ViewObject.new(standup)
 

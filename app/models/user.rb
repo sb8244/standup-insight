@@ -9,6 +9,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  def self.gets_email
+    where(gets_email: true)
+  end
+
   def display_name
     name || email
   end
