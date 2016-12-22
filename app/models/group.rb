@@ -1,6 +1,7 @@
 class Group < ApplicationRecord
   has_and_belongs_to_many :users
   has_many :stand_ups
+  has_one :slack_integration
 
   def todays_standup
     @todays_standup ||= find_or_create_standup_for_day!(0)

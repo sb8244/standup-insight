@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_many :answers
   has_many :stand_ups, through: :groups
+  has_many :slack_integrations
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
