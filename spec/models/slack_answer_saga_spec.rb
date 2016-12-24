@@ -130,16 +130,18 @@ RSpec.describe SlackAnswerSaga do
         end
 
         context "without all answers present" do
-          it "puts the session in an error state" do
+          let!(:response1) { session.slack_responses.create!(text: "First", question_id: 1, question_content: group.question_set.question(1)) }
+
+          it "completes session" do
             expect {
               subject.process(text: "FinIsh", reply_proc: reply_proc)
-            }.to change { session.reload.status }.from("active").to("error")
+            }.to change { session.reload.status }.from("active").to("complete")
           end
 
-          it "doesn't create any answers" do
+          it "logs what answers it has" do
             expect {
               subject.process(text: "FinIsh", reply_proc: reply_proc)
-            }.not_to change { Answer.count }
+            }.to change { Answer.count }.by(1)
           end
         end
       end
