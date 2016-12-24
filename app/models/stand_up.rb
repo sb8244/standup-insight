@@ -8,6 +8,10 @@ class StandUp < ApplicationRecord
     self
   end
 
+  def question_set
+    group.question_set
+  end
+
   def users_answered
     user_ids = answers.pluck("DISTINCT(user_id)")
     group.users.where(id: user_ids)

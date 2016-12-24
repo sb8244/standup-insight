@@ -15,6 +15,10 @@ class QuestionSet
     questions.keys
   end
 
+  def first
+    questions[1]
+  end
+
   def next_question_id(id)
     current_question_index = question_ids.index(id)
     question_ids[current_question_index + 1]
