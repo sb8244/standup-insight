@@ -7,8 +7,7 @@ class SteveBot < SlackBotServer::Bot
     elsif data['message'] == 'counts'
       reply text: "#{User.count}"
     elsif slack_user_mapping
-      slack_api = slack_user_mapping.group.slack_integration.slack_api
-      SlackAnswerSaga.new(slack_api, slack_user_mapping).process(text: data.fetch("message"), reply_proc: method(:reply))
+      SlackAnswerSaga.new(slack_user_mapping).process(text: data.fetch("message"), reply_proc: method(:reply))
     else
       reply text: "Sorry, I don't know who you are."
     end

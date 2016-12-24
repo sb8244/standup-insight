@@ -108,7 +108,12 @@ RSpec.describe SlackAnswerSaga do
           it "logs all answers" do
             expect {
               subject.process(text: "FinIsh", reply_proc: reply_proc)
-            }.to change { Answer.count }.by(4)
+            }.to change { Answer.count }.by(3)
+          end
+
+          it "combines answers for the same question" do
+            subject.process(text: "FinIsh", reply_proc: reply_proc)
+            expect(Answer.first.content).to eq("First\n\nFirst Part 2")
           end
 
           it "completes the slack session" do
