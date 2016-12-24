@@ -1,3 +1,10 @@
+now = Time.now.in_time_zone("US/Eastern")
+
+if ENV["CHECK_INTERVAL"] && (now.hour < 8 || now.hour > 11) # Only run between 8 and 12
+  p "exiting"
+  exit
+end
+
 class SteveBot < SlackBotServer::Bot
   on_im do |data|
     slack_user_mapping = SlackUserMapping.find_by(slack_user_id: data.fetch("user"), slack_team_id: data.fetch("team"))
