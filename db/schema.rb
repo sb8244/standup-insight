@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161224162655) do
+ActiveRecord::Schema.define(version: 20161224212337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 20161224162655) do
     t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
   end
 
+  create_table "slack_answer_sessions", force: :cascade do |t|
+    t.integer  "slack_user_mapping_id",                    null: false
+    t.text     "status",                default: "active", null: false
+    t.integer  "current_question_id",                      null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "stand_up_id",                              null: false
+    t.index ["slack_user_mapping_id"], name: "index_slack_answer_sessions_on_slack_user_mapping_id", using: :btree
+    t.index ["stand_up_id"], name: "index_slack_answer_sessions_on_stand_up_id", using: :btree
+    t.index ["status"], name: "index_slack_answer_sessions_on_status", using: :btree
+  end
+
   create_table "slack_integrations", force: :cascade do |t|
     t.integer  "user_id",         null: false
     t.integer  "group_id",        null: false
@@ -55,6 +67,16 @@ ActiveRecord::Schema.define(version: 20161224162655) do
     t.datetime "updated_at",      null: false
     t.index ["group_id"], name: "index_slack_integrations_on_group_id", using: :btree
     t.index ["user_id"], name: "index_slack_integrations_on_user_id", using: :btree
+  end
+
+  create_table "slack_responses", force: :cascade do |t|
+    t.integer  "slack_answer_session_id", null: false
+    t.integer  "question_id",             null: false
+    t.text     "text",                    null: false
+    t.text     "question_content",        null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["slack_answer_session_id"], name: "index_slack_responses_on_slack_answer_session_id", using: :btree
   end
 
   create_table "slack_user_mappings", force: :cascade do |t|
