@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20161224162655) do
     t.integer  "user_id",       null: false
     t.integer  "group_id",      null: false
     t.text     "slack_user_id", null: false
+    t.text     "slack_team_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["group_id"], name: "index_slack_user_mappings_on_group_id", using: :btree

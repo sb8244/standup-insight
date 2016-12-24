@@ -4,6 +4,7 @@ class CreateSlackUserMappings < ActiveRecord::Migration[5.0]
       t.belongs_to :user, null: false, index: true
       t.belongs_to :group, null: false, index: true
       t.text :slack_user_id, null: false
+      t.text :slack_team_id, null: false
 
       t.timestamps
     end
