@@ -26,11 +26,11 @@ class SlackSessionKickoffJob < ApplicationJob
   end
 
   def create_new_session!
-    slack_user_mapping.slack_answer_sessions.create!(status: "active", current_question_id: stand_up.question_set.first, stand_up: stand_up)
+    slack_user_mapping.slack_answer_sessions.create!(status: "active", current_question_id: stand_up.question_set.first_id, stand_up: stand_up)
   end
 
   def private_message_slack!
-    slack_control.say_to(bot_token, slack_user_mapping.slack_user_id, message: "Time for your standup! #{stand_up.question_set.first}")
+    slack_control.say_to(bot_token, slack_user_mapping.slack_user_id, text: "Time for your standup! #{stand_up.question_set.first}")
   end
 
   def bot_token

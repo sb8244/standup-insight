@@ -38,6 +38,10 @@ RSpec.describe SlackSessionKickoffJob do
 
   it "creates a new session" do
     expect { job }.to change { SlackAnswerSession.count }.by(1)
+    expect(SlackAnswerSession.last.attributes.symbolize_keys).to include(
+      status: "active",
+      current_question_id: stand_up.question_set.first_id
+    )
   end
 
   it "kicks off a slack message" do
@@ -52,7 +56,7 @@ RSpec.describe SlackSessionKickoffJob do
       "say_to",
       slack_integration.bot_token,
       user_mapping.slack_user_id,
-      { "message" => "Time for your standup! #{stand_up.question_set.first}" }
+      { "text" => "Time for your standup! #{stand_up.question_set.first}" }
     ])
   end
 end

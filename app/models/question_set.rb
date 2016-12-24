@@ -15,8 +15,12 @@ class QuestionSet
     questions.keys
   end
 
+  def first_id
+    questions.first[0]
+  end
+
   def first
-    questions[1]
+    questions.first[1]
   end
 
   def next_question_id(id)
