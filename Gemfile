@@ -5,6 +5,7 @@ ruby "2.3.1"
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg'
 gem 'puma', '~> 3.0'
+gem 'redis'
 
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '~> 5.0'
@@ -31,3 +32,5 @@ end
 group :test do
   gem 'rspec-rails'
 end
+
+gem 'slack-bot-server'
