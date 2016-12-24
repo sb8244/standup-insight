@@ -10,4 +10,21 @@ class QuestionSet
   def question(id)
     questions[Integer(id)]
   end
+
+  def question_ids
+    questions.keys
+  end
+
+  def first_id
+    questions.first[0]
+  end
+
+  def first
+    questions.first[1]
+  end
+
+  def next_question_id(id)
+    current_question_index = question_ids.index(id)
+    question_ids[current_question_index + 1]
+  end
 end
