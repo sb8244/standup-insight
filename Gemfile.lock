@@ -99,6 +99,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
+    mock_redis (0.17.1)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -238,6 +239,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   listen (~> 3.0.5)
+  mock_redis
   omniauth-slack
   pg
   pry-rails
