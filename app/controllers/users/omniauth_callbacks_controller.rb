@@ -1,3 +1,5 @@
+require 'slack_bot_server/remote_control'
+
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   SLACK_INTEGRATION_SUCCESS = "Slack Integration setup!"
   SLACK_INTEGRATION_SIGN_IN = "Must be signed in before setting up slack"
@@ -28,6 +30,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       integration.slack_team_url = auth_info[:extra][:raw_info][:url]
       integration.slack_user_id = auth_info[:info][:user_id]
       integration.save! if integration.changed?
+      ensure_integration_active!(integration)
     end
+  end
+
+  def ensure_integration_active!(integration)
+    queue = SlackBotServer::RedisQueue.new(redis: $redis)
+    server = SlackBotServer::RemoteControl.new(queue: queue)
+    server.add_bot(integration.bot_token)
   end
 end
