@@ -1,5 +1,3 @@
-require_relative 'slack_answer_saga'
-
 class SteveBot < SlackBotServer::Bot
   on_im do |data|
     slack_user_mapping = SlackUserMapping.find_by(slack_user_id: data.fetch("user"), slack_team_id: data.fetch("team"))
