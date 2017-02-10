@@ -7,7 +7,7 @@ end
 
 class SteveBot < SlackBotServer::Bot
   on_im do |data|
-    slack_user_mapping = SlackUserMapping.find_by(slack_user_id: data.fetch("user"), slack_team_id: data.fetch("team"))
+    slack_user_mapping = SlackUserMapping.find_by(slack_user_id: data.fetch("user"), slack_team_id: data.fetch("source_team"))
 
     if data['message'] == 'who are you'
       reply text: "I am #{bot_user_name} (user id: #{bot_user_id}, connected to team #{team_name} with team id #{team_id}"
